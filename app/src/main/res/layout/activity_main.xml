@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAudi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="Auditorium" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAdmin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="Admin Block" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSP"
+        android:layout_width="wrap_content"
+        android:textAllCaps="false"
+        android:layout_height="wrap_content"
+        android:text="Students Park" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnKBH"
+        android:layout_width="wrap_content"
+        android:textAllCaps="false"
+        android:layout_height="wrap_content"
+        android:text="Kailash Boys Hostel" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAGH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="Ambika Girls Hostel" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGate1"
+        android:layout_width="wrap_content"
+        android:textAllCaps="false"
+        android:layout_height="wrap_content"
+        android:text="Gate 1" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGate2"
+        android:layout_width="wrap_content"
+        android:textAllCaps="false"
+        android:layout_height="wrap_content"
+        android:text="Gate 2" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnEED"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="Electrical Engineering Department" />
+
+<androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnECED"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="ECE Department" />
+
+<androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCSED"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="CSE Department" />
+
+<androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnMED"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="Mechanical Engineering Department" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnCED"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="Civil Engineering Department" />
+
+
+</LinearLayout>
