@@ -18,13 +18,17 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.example.nithguide.adapters.LocationsAdapter;
 import com.example.nithguide.databinding.ActivityMainBinding;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -37,37 +41,11 @@ public class MainActivity extends AppCompatActivity {
 
     private LocationCallback locationCallback;
 
-    //gates
-    private String gate1coor = "31.7016995, 76.5229893";
-    private String gate2coor = "31.708900037447254, 76.52263773242339";
-
-
-
-    //departments
-    private String eedCoor = "31.708085400003576, 76.5271815531355";
-    private String ecedCoor = "31.708109772830227, 76.52647808576009";
-    private String cedCoor = "31.709144878905, 76.52730340702821";
-    private String archdCoor = "31.709099884671755, 76.52625003184772";
-    private String medCoor = "31.708903034644, 76.52670840431122";
-    private String csedCoor = "31.70851407397333, 76.52701776228302";
-    private String chemdCoor = "31.708085400003576, 76.5271815531355";
-    private String phydCoor = "31.707984917458457, 76.52663048685703";
-
-    // other buildings
-    private String audiCoor = "31.70696584790547, 76.52749762818713";
-    private String oatCoor = "31.70696584790547, 76.52749762818713";
-    private String libraryCoor = "31.707149508347, 76.52685828667752";
-    private String healthCenterCoor = "31.70620363308952, 76.52772360079611";
-    private String adminCoor  = "31.708087726225166, 76.52810142058244";
-
-    //parks and open areas
-    private String SPcoor = "31.707121474493064, 76.52844713483385";
-
-    //hostels
-    private String KBHcoor = "31.710606994978843, 76.52660411380484";
-    private String AGHcoor = "31.703996709191138, 76.52536551973783";
-
     private String destinationCoor;
+
+    ArrayList<String> locations = new ArrayList<>();
+    HashMap<String , String> coordinatesMap = new HashMap<>();
+
 
 
     @Override
@@ -78,7 +56,61 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+        //locations
+        locations.add("Gate 1");
+        locations.add("Gate 2");
+        locations.add("Administration Block");
+        locations.add("Auditorium");
+        locations.add("Central Library");
+        locations.add("Central Block");
+        locations.add("Health Center");
+        locations.add("EED");
+        locations.add("ECED");
+        locations.add("CSED");
+        locations.add("MED");
+        locations.add("CED");
+        locations.add("PHYD");
+        locations.add("CHEMD");
+        locations.add("MSD");
+        locations.add("MNCD");
+        locations.add("Architecture Department");
+        locations.add("KBH");
+        locations.add("AGH");
+        locations.add("SP");
+        locations.add("OAT");
+        locations.add("NITH Ground");
 
+
+        coordinatesMap.put("Gate 1","31.7016995, 76.5229893");
+        coordinatesMap.put("Gate 2","31.708900037447254, 76.52263773242339");
+        coordinatesMap.put("Administration Block","31.708087726225166, 76.52810142058244");
+        coordinatesMap.put("Auditorium","31.70696584790547, 76.52749762818713");
+        coordinatesMap.put("Central Library","31.707149508347, 76.52685828667752");
+        coordinatesMap.put("Central Block","31.707549772997243, 76.52801368892406");
+        coordinatesMap.put("Health Center","31.70617193420401, 76.52771865049216");
+        coordinatesMap.put("EED","31.708085400003576, 76.5271815531355");
+        coordinatesMap.put("ECED","31.708109772830227, 76.52647808576009");
+        coordinatesMap.put("CSED","31.70851407397333, 76.52701776228302");
+        coordinatesMap.put("MED","31.708903034644, 76.52670840431122");
+        coordinatesMap.put("CED","31.709144878905, 76.52730340702821");
+        coordinatesMap.put("PHYD","31.707984917458457, 76.52663048685703");
+        coordinatesMap.put("CHEMD","31.708085400003576, 76.5271815531355");
+        coordinatesMap.put("MSD","31.708032556621895, 76.52652131865193");
+        coordinatesMap.put("MNCD","31.708425511985663, 76.5276463632699");
+        coordinatesMap.put("Architecture Department","31.709099884671755, 76.52625003184772");
+        coordinatesMap.put("KBH","31.710606994978843, 76.52660411380484");
+        coordinatesMap.put("AGH","31.703996709191138, 76.52536551973783");
+        coordinatesMap.put("SP","31.707121474493064, 76.52844713483385");
+        coordinatesMap.put("OAT","31.70696584790547, 76.52749762818713");
+        coordinatesMap.put("NITH Ground","31.70621256652986, 76.52479377889479");
+
+        LocationsAdapter adapter =  new LocationsAdapter(MainActivity.this, locations, new LocationsAdapter.Listener() {
+            @Override
+            public void onLocationClicked(String locationName, int position) {
+                destinationCoor = coordinatesMap.get(locationName);
+                getCurrentLocation();
+            }
+        });
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
@@ -104,26 +136,15 @@ public class MainActivity extends AppCompatActivity {
         };
 
 
-        binding.btnAudi.setOnClickListener(view -> {
-            destinationCoor = audiCoor;
-            getCurrentLocation();
+        binding.rcvLocations.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+
+        binding.rcvLocations.setAdapter(adapter);
+
+
+        binding.btnMap.setOnClickListener(view -> {
+            startActivity(new Intent(this, ActivityMap.class));
         });
-        binding.btnKBH.setOnClickListener(view -> {
-            destinationCoor = KBHcoor;
-            getCurrentLocation();
-        });
-        binding.btnGate1.setOnClickListener(view -> {
-            destinationCoor = gate1coor;
-            getCurrentLocation();
-        });
-        binding.btnSP.setOnClickListener(view -> {
-            destinationCoor = SPcoor;
-            getCurrentLocation();
-        });
-        binding.btnGate2.setOnClickListener(view -> {
-            destinationCoor = gate2coor;
-            getCurrentLocation();
-        });
+
 
     }
 
@@ -131,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
     private void launchMaps(String currentCoordinates, String destinationCoordinates) {
         Toast.makeText(this, "Launching maps", Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(this,ActivityMapView.class);
+        Intent intent = new Intent(MainActivity.this,ActivityMapView.class);
         intent.putExtra("SOURCE", currentCoordinates);
         intent.putExtra("DESTINATION", destinationCoordinates);
 

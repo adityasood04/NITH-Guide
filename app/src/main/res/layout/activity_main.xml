@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
@@ -7,12 +8,56 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnAudi"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:fontFamily="@font/poppins_semibold"
+            android:gravity="center"
+            android:text="NITH Guide"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5" />
+
+        <ImageView
+            android:id="@+id/btnMap"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/map"
+            android:paddingVertical="16dp"
+            android:paddingStart="32dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="Auditorium" />
+        android:text="Where do you want to go?"
+        android:textSize="16sp"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_marginVertical="8dp"
+        android:layout_marginHorizontal="16dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rcvLocations"
+        tools:listitem="@layout/btn_item"
+        />
+
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnAdmin"
@@ -29,18 +74,7 @@
         android:layout_height="wrap_content"
         android:text="Students Park" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnKBH"
-        android:layout_width="wrap_content"
-        android:textAllCaps="false"
-        android:layout_height="wrap_content"
-        android:text="Kailash Boys Hostel" />
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnAGH"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="Ambika Girls Hostel" />
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnGate1"
@@ -54,6 +88,19 @@
         android:textAllCaps="false"
         android:layout_height="wrap_content"
         android:text="Gate 2" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnKBH"
+        android:layout_width="wrap_content"
+        android:textAllCaps="false"
+        android:layout_height="wrap_content"
+        android:text="Kailash Boys Hostel" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnAGH"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:text="Ambika Girls Hostel" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnEED"

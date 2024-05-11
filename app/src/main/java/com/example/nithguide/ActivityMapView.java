@@ -33,5 +33,8 @@ public class ActivityMapView extends AppCompatActivity {
         if (source == null || destination == null) return;
         String url = "https://www.google.com/maps/dir/" + source + "/" + destination;
         binding.webView.loadUrl(url);
+
+
+        binding.btnBack.setOnClickListener(view -> finish());
     }
 }
