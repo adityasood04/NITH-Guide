@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -82,7 +83,7 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
         }
 
 
-        holder.tvLocationName.setOnClickListener(view -> {
+        holder.llLocation.setOnClickListener(view -> {
             listener.onLocationClicked(locations.get(holder.getAdapterPosition()).first, holder.getAdapterPosition());
         });
     }
@@ -100,11 +101,13 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
     public  class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvLocationName;
         ImageView ivLocationType;
+        LinearLayout llLocation;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvLocationName = itemView.findViewById(R.id.tvLocationName);
             ivLocationType = itemView.findViewById(R.id.ivLocation);
+            llLocation = itemView.findViewById(R.id.llLocation);
 
         }
     }
