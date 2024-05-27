@@ -1,7 +1,10 @@
 package com.example.nithguide;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,5 +26,6 @@ public class ActivityMap extends AppCompatActivity {
         });
         ImageView btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(view -> finish());
+        TextView tvMapHeader = findViewById(R.id.tvMapHeader);
     }
 }

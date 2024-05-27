@@ -56,6 +56,15 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        binding.tvHeadMain.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                Toast.makeText(MainActivity.this, "Developed with ❤️ by Aditya Sood.", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
+
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         //locations
         locations.add(new Pair<>("NIT Gate 1", 0));
