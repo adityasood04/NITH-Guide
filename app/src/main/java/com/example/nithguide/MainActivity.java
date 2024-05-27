@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
@@ -59,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
         //locations
         locations.add(new Pair<>("NIT Gate 1", 0));
         locations.add(new Pair<>("NIT Gate 2", 0));
-        locations.add(new Pair<>("Auditorium", 1));
-        locations.add(new Pair<>("Admin Block", 1));
         locations.add(new Pair<>("Health Center", -2));
+        locations.add(new Pair<>("Auditorium", 2));
+        locations.add(new Pair<>("Admin Block", 1));
         locations.add(new Pair<>("Central Block", 1));
         locations.add(new Pair<>("Central Library", -1));
         locations.add(new Pair<>("Electrical Eng. Dept.", 56));
@@ -108,9 +109,9 @@ public class MainActivity extends AppCompatActivity {
         coordinatesMap.put("Open air theatre", "31.70531806369203, 76.52518493127135");
         coordinatesMap.put("NITH Ground", "31.706161666422613, 76.52479654402494");
 
-        coordinatesMap.put("4H Food Court", "31.71076336518409, 76.52695767400598");
+        coordinatesMap.put("4H Food Court", "31.710762114415314, 76.52695801148334");
         coordinatesMap.put("Nescafe Cafeteria", "31.7074170529067, 76.52825056015737");
-        coordinatesMap.put("Food Court", "31.70857869080059, 76.5227430248248");
+        coordinatesMap.put("Food Court (Gate 2)", "31.708552442338988, 76.52276798685268");
         coordinatesMap.put("Verka", "31.706833626062885, 76.529061436059");
 
         LocationsAdapter adapter = new LocationsAdapter(MainActivity.this, locations, new LocationsAdapter.Listener() {
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        // Define location callback
+        // location callback
         locationCallback = new LocationCallback() {
             @Override
             public void onLocationResult(LocationResult locationResult) {
@@ -143,21 +144,29 @@ public class MainActivity extends AppCompatActivity {
 //                    Toast.makeText(MainActivity.this, "Current Location: " + latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
                 }
                 if (progressDialog != null) {
-                    snackbar = Snackbar.make(binding.getRoot(), "Location fetched successfully. Click on a destination.", Snackbar.LENGTH_SHORT).setAction("Okay", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            if (snackbar != null)
-                                snackbar.dismiss();
-                        }
-                    });
-                    snackbar.setBackgroundTint(getColor(R.color.white));
-                    snackbar.setTextColor(getColor(R.color.black));
-                    snackbar.setActionTextColor(getColor(R.color.blue));
-                    snackbar.show();
+
+
+
+
+//                    snackbar = Snackbar.make(binding.getRoot(), "Location fetched successfully. Click on a destination.", Snackbar.LENGTH_SHORT).setAction("Okay", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            if (snackbar != null)
+//                                snackbar.dismiss();
+//                        }
+//                    });
+//                    snackbar.setBackgroundTint(getColor(R.color.white));
+//                    snackbar.setTextColor(getColor(R.color.black));
+//                    snackbar.setActionTextColor(getColor(R.color.blue));
+//                    snackbar.show();
 //                    Toast.makeText(MainActivity.this, "Location fetched successfully. Click on a destination.", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
+                    if(destinationCoor != null) {
+                        launchMaps(currentLocation,destinationCoor);
+                    }
                     progressDialog = null;
                 }
+
             }
         };
         int spanCount = 3; // 3 columns
@@ -185,6 +194,7 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("DESTINATION", destinationCoordinates);
 
         startActivity(intent);
+        destinationCoor = null;
     }
 
     private boolean isLocationEnabled() {
@@ -219,8 +229,10 @@ public class MainActivity extends AppCompatActivity {
 
             } else {
                 Toast.makeText(this, "Please give location permissions", Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(i);
+//                Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+//                startActivity(i);
+                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                startActivityForResult(intent, 100);
             }
         } else {
             requestPermissions();
@@ -272,6 +284,31 @@ public class MainActivity extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100) {
+
+
+            if (isLocationEnabled()) {
+                Log.i(TAG, "onActivityResult: location yes");
+                if (currentLocation == null) {
+                    progressDialog = new ProgressDialog(this);
+                    progressDialog.setMessage("Fetching your location. Please wait...");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    requestLocation();
+                    return;
+                }
+                launchMaps(currentLocation, destinationCoor);
+
+                Toast.makeText(this, "GPS enabled", Toast.LENGTH_SHORT).show();
+            } else {
+                // GPS is still not enabled, show a message or take appropriate action
+                Toast.makeText(this, "GPS is not enabled. Please enable GPS to proceed.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     @Override
     protected void onDestroy() {
