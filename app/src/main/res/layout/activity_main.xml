@@ -16,8 +16,8 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="8dp"
             android:layout_marginHorizontal="16dp"
+            android:layout_marginVertical="8dp"
             android:fontFamily="@font/poppins_semibold"
             android:gravity="center"
             android:text="NITH Guide"
@@ -31,110 +31,33 @@
             android:id="@+id/btnMap"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/map"
+            android:layout_marginEnd="16dp"
             android:paddingVertical="16dp"
             android:paddingStart="32dp"
-            android:layout_marginEnd="16dp"
+            android:src="@drawable/map"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Where do you want to go?"
-        android:textSize="16sp"
-        android:fontFamily="@font/poppins_semibold"
+        android:layout_marginHorizontal="16dp"
         android:layout_marginVertical="8dp"
-        android:layout_marginHorizontal="16dp"/>
+        android:fontFamily="@font/poppins_semibold"
+        android:text="Where do you want to go?"
+        android:textSize="16sp" />
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvLocations"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/rcvLocations"
-        tools:listitem="@layout/btn_item"
-        />
+        android:layout_gravity="center"
+        android:textAlignment="center"
 
+        tools:listitem="@layout/btn_item" />
 
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnAdmin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="Admin Block" />
-
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnSP"
-        android:layout_width="wrap_content"
-        android:textAllCaps="false"
-        android:layout_height="wrap_content"
-        android:text="Students Park" />
-
-
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnGate1"
-        android:layout_width="wrap_content"
-        android:textAllCaps="false"
-        android:layout_height="wrap_content"
-        android:text="Gate 1" />
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnGate2"
-        android:layout_width="wrap_content"
-        android:textAllCaps="false"
-        android:layout_height="wrap_content"
-        android:text="Gate 2" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnKBH"
-        android:layout_width="wrap_content"
-        android:textAllCaps="false"
-        android:layout_height="wrap_content"
-        android:text="Kailash Boys Hostel" />
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnAGH"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="Ambika Girls Hostel" />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnEED"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="Electrical Engineering Department" />
-
-<androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnECED"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="ECE Department" />
-
-<androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnCSED"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="CSE Department" />
-
-<androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnMED"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="Mechanical Engineering Department" />
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnCED"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAllCaps="false"
-        android:text="Civil Engineering Department" />
 
 
 </LinearLayout>

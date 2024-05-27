@@ -4,13 +4,12 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Toast;
 
@@ -21,10 +20,11 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.nithguide.adapters.LocationsAdapter;
 import com.example.nithguide.databinding.ActivityMainBinding;
+import com.example.nithguide.helper.SpacesItemDecoration;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
@@ -34,25 +34,19 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int REQUEST_LOCATION_PERMISSION = 1;
     ActivityMainBinding binding;
+    ArrayList<Pair<String, Integer>> locations = new ArrayList<>();
+    HashMap<String, String> coordinatesMap = new HashMap<>();
+    Snackbar snackbar;
+    String TAG = "main";
     private String currentLocation;
     private ProgressDialog progressDialog;
-
-    private static final int REQUEST_LOCATION_PERMISSION = 1;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-
     private LocationCallback locationCallback;
-
     private String destinationCoor;
-
-    ArrayList<String> locations = new ArrayList<>();
-    HashMap<String , String> coordinatesMap = new HashMap<>();
-    Snackbar snackbar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,54 +57,59 @@ public class MainActivity extends AppCompatActivity {
 
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         //locations
-        locations.add("Gate 1");
-        locations.add("Gate 2");
-        locations.add("Administration Block");
-        locations.add("Auditorium");
-        locations.add("Central Library");
-        locations.add("Central Block");
-        locations.add("Health Center");
-        locations.add("Electrical Eng. Dept.");
-        locations.add("Electronics and Communication Eng. Dept.");
-        locations.add("Computer Science and Eng. Dept.");
-        locations.add("Mechanical Eng. Dept.");
-        locations.add("Civil Eng. Dept.");
-        locations.add("Physics Dept.");
-        locations.add("Chemical Eng. Dept");
-        locations.add("Material Science Dept.");
-        locations.add("Mathematics and Scientific Computing");
-        locations.add("Architecture Department");
-        locations.add("Kailash Boys Hostel");
-        locations.add("Ambika Girls Hostel");
-        locations.add("Students Park");
-        locations.add("Open air theatre");
-        locations.add("NITH Ground");
+        locations.add(new Pair<>("NIT Gate 1", 0));
+        locations.add(new Pair<>("NIT Gate 2", 0));
+        locations.add(new Pair<>("Auditorium", 1));
+        locations.add(new Pair<>("Admin Block", 1));
+        locations.add(new Pair<>("Health Center", -2));
+        locations.add(new Pair<>("Central Block", 1));
+        locations.add(new Pair<>("Central Library", -1));
+        locations.add(new Pair<>("Electrical Eng. Dept.", 56));
+        locations.add(new Pair<>("Mechanical Eng. Dept.", 56));
+        locations.add(new Pair<>("Computer Science and Eng. Dept.", 56));
+        locations.add(new Pair<>("Electronics and Communication Eng. Dept.", 56));
+        locations.add(new Pair<>("Mathematics and Scientific Computing", 56));
+        locations.add(new Pair<>("Material Science Dept.", 56));
+        locations.add(new Pair<>("Chemical Eng. Dept", 56));
+        locations.add(new Pair<>("Architecture Department", 56));
+        locations.add(new Pair<>("Civil Eng. Dept.", 56));
+        locations.add(new Pair<>("Physics Dept.", 56));
+        locations.add(new Pair<>("Kailash Boys Hostel", 100));
+        locations.add(new Pair<>("Ambika Girls Hostel", 100));
+        locations.add(new Pair<>("Students Park", 200));
+        locations.add(new Pair<>("Open air theatre", 200));
+        locations.add(new Pair<>("NITH Ground", 300));
 
 
-        coordinatesMap.put("Gate 1","31.7016995, 76.5229893");
-        coordinatesMap.put("Gate 2","31.708900037447254, 76.52263773242339");
-        coordinatesMap.put("Administration Block","31.708087726225166, 76.52810142058244");
-        coordinatesMap.put("Auditorium","31.70696584790547, 76.52749762818713");
-        coordinatesMap.put("Central Library","31.707149508347, 76.52685828667752");
-        coordinatesMap.put("Central Block","31.707549772997243, 76.52801368892406");
-        coordinatesMap.put("Health Center","31.70617193420401, 76.52771865049216");
-        coordinatesMap.put("Electrical Eng. Dept.","31.708085400003576, 76.5271815531355");
-        coordinatesMap.put("Electronics and Communication Eng. Dept.","31.70813262048218, 76.5265409887605");
-        coordinatesMap.put("Computer Science and Eng. Dept.","31.70851407397333, 76.52701776228302");
-        coordinatesMap.put("Mechanical Eng. Dept.","31.708903034644, 76.52670840431122");
-        coordinatesMap.put("Civil Eng. Dept.","31.709144878905, 76.52730340702821");
-        coordinatesMap.put("Physics Dept.","31.70797416477527, 76.52661849164565");
-        coordinatesMap.put("Chemical Eng. Dept","31.708325106584287, 76.52611847303176");
-        coordinatesMap.put("Material Science Dept.","31.707619790108954, 76.52792399973634");
-        coordinatesMap.put("Mathematics and Scientific Computing","31.708443539991, 76.5276638254619");
-        coordinatesMap.put("Architecture Department","31.709099884671755, 76.52625003184772");
-        coordinatesMap.put("Kailash Boys Hostel","31.71059356898743, 76.52662886032971");
-        coordinatesMap.put("Ambika Girls Hostel","31.703996709191138, 76.52536551973783");
-        coordinatesMap.put("Students Park","31.707145160821206, 76.52849531025659");
-        coordinatesMap.put("Open air theatre","31.70531806369203, 76.52518493127135");
-        coordinatesMap.put("NITH Ground","31.706161666422613, 76.52479654402494");
+        coordinatesMap.put("NIT Gate 1", "31.7016995, 76.5229893");
+        coordinatesMap.put("NIT Gate 2", "31.708900037447254, 76.52263773242339");
+        coordinatesMap.put("Admin Block", "31.708087726225166, 76.52810142058244");
+        coordinatesMap.put("Auditorium", "31.70696584790547, 76.52749762818713");
+        coordinatesMap.put("Central Library", "31.707149508347, 76.52685828667752");
+        coordinatesMap.put("Central Block", "31.707549772997243, 76.52801368892406");
+        coordinatesMap.put("Health Center", "31.70617193420401, 76.52771865049216");
+        coordinatesMap.put("Electrical Eng. Dept.", "31.708085400003576, 76.5271815531355");
+        coordinatesMap.put("Electronics and Communication Eng. Dept.", "31.70813262048218, 76.5265409887605");
+        coordinatesMap.put("Computer Science and Eng. Dept.", "31.70851407397333, 76.52701776228302");
+        coordinatesMap.put("Mechanical Eng. Dept.", "31.708903034644, 76.52670840431122");
+        coordinatesMap.put("Civil Eng. Dept.", "31.709144878905, 76.52730340702821");
+        coordinatesMap.put("Physics Dept.", "31.70797416477527, 76.52661849164565");
+        coordinatesMap.put("Chemical Eng. Dept", "31.708325106584287, 76.52611847303176");
+        coordinatesMap.put("Material Science Dept.", "31.707619790108954, 76.52792399973634");
+        coordinatesMap.put("Mathematics and Scientific Computing", "31.708443539991, 76.5276638254619");
+        coordinatesMap.put("Architecture Department", "31.709099884671755, 76.52625003184772");
+        coordinatesMap.put("Kailash Boys Hostel", "31.71059356898743, 76.52662886032971");
+        coordinatesMap.put("Ambika Girls Hostel", "31.703996709191138, 76.52536551973783");
+        coordinatesMap.put("Students Park", "31.707145160821206, 76.52849531025659");
+        coordinatesMap.put("Open air theatre", "31.70531806369203, 76.52518493127135");
+        coordinatesMap.put("NITH Ground", "31.706161666422613, 76.52479654402494");
 
-        LocationsAdapter adapter =  new LocationsAdapter(MainActivity.this, locations, new LocationsAdapter.Listener() {
+        coordinatesMap.put("4H Food Court", "31.71076336518409, 76.52695767400598");
+        coordinatesMap.put("Nescafe Cafeteria", "31.7074170529067, 76.52825056015737");
+        coordinatesMap.put("Food Court", "31.70857869080059, 76.5227430248248");
+        coordinatesMap.put("Verka", "31.706833626062885, 76.529061436059");
+
+        LocationsAdapter adapter = new LocationsAdapter(MainActivity.this, locations, new LocationsAdapter.Listener() {
             @Override
             public void onLocationClicked(String locationName, int position) {
                 destinationCoor = coordinatesMap.get(locationName);
@@ -139,11 +138,11 @@ public class MainActivity extends AppCompatActivity {
                     currentLocation = latitude + "," + longitude;
 //                    Toast.makeText(MainActivity.this, "Current Location: " + latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
                 }
-                if(progressDialog!= null){
-                    snackbar = Snackbar.make(binding.getRoot(),"Location fetched successfully. Click on a destination.",Snackbar.LENGTH_SHORT).setAction("Okay", new View.OnClickListener() {
+                if (progressDialog != null) {
+                    snackbar = Snackbar.make(binding.getRoot(), "Location fetched successfully. Click on a destination.", Snackbar.LENGTH_SHORT).setAction("Okay", new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            if(snackbar!= null)
+                            if (snackbar != null)
                                 snackbar.dismiss();
                         }
                     });
@@ -157,9 +156,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         };
+        int spanCount = 3; // 3 columns
+        int spacing = 16;
+        boolean includeEdge = true;
+        binding.rcvLocations.addItemDecoration(new SpacesItemDecoration(spanCount, spacing, includeEdge));
 
-
-        binding.rcvLocations.setLayoutManager(new LinearLayoutManager(MainActivity.this));
+        binding.rcvLocations.setLayoutManager(new GridLayoutManager(this, 3));
 
         binding.rcvLocations.setAdapter(adapter);
 
@@ -171,24 +173,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     private void launchMaps(String currentCoordinates, String destinationCoordinates) {
         Toast.makeText(this, "Launching maps", Toast.LENGTH_SHORT).show();
 
-        Intent intent = new Intent(MainActivity.this,ActivityMapView.class);
+        Intent intent = new Intent(MainActivity.this, ActivityMapView.class);
         intent.putExtra("SOURCE", currentCoordinates);
         intent.putExtra("DESTINATION", destinationCoordinates);
 
         startActivity(intent);
     }
 
-
     private boolean isLocationEnabled() {
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
                 locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
     }
-String TAG = "main";
+
     private void getCurrentLocation() {
         Log.i(TAG, "getCurrentLocation: called");
         if (checkPermissions()) {
@@ -202,7 +202,7 @@ String TAG = "main";
                     return;
                 }
 
-                if(currentLocation == null){
+                if (currentLocation == null) {
                     progressDialog = new ProgressDialog(this);
                     progressDialog.setMessage("Fetching your location. Please wait...");
                     progressDialog.setCancelable(false);
@@ -213,8 +213,7 @@ String TAG = "main";
                 launchMaps(currentLocation, destinationCoor);
 
 
-            }
-            else {
+            } else {
                 Toast.makeText(this, "Please give location permissions", Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 startActivity(i);
@@ -223,6 +222,7 @@ String TAG = "main";
             requestPermissions();
         }
     }
+
     private void requestPermissions() {
         ActivityCompat.requestPermissions(
                 this,
@@ -267,7 +267,6 @@ String TAG = "main";
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
 
 
     @Override
