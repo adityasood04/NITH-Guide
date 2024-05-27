@@ -79,6 +79,10 @@ public class MainActivity extends AppCompatActivity {
         locations.add(new Pair<>("Students Park", 200));
         locations.add(new Pair<>("Open air theatre", 200));
         locations.add(new Pair<>("NITH Ground", 300));
+        locations.add(new Pair<>("4H Food Court", 400));
+        locations.add(new Pair<>("Verka", 400));
+        locations.add(new Pair<>("Nescafe Cafeteria", 400));
+        locations.add(new Pair<>("Food Court (Gate 2)", 400));
 
 
         coordinatesMap.put("NIT Gate 1", "31.7016995, 76.5229893");

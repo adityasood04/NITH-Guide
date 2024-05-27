@@ -51,7 +51,11 @@ public class LocationsAdapter extends RecyclerView.Adapter<LocationsAdapter.View
                 break;
             }
             case 0 : {
-                holder.ivLocationType.setImageDrawable(ActivityCompat.getDrawable(context, R.drawable.food));
+                holder.ivLocationType.setImageDrawable(ActivityCompat.getDrawable(context, R.drawable.gate));
+                break;
+            }
+            case 1 : {
+                holder.ivLocationType.setImageDrawable(ActivityCompat.getDrawable(context, R.drawable.admin));
                 break;
             }
             case 56 : {
