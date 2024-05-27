@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         locations.add(new Pair<>("Open air theatre", 200));
         locations.add(new Pair<>("NITH Ground", 300));
         locations.add(new Pair<>("4H Food Court", 400));
-        locations.add(new Pair<>("Verka", 400));
+        locations.add(new Pair<>("Verka Cafeteria", 400));
         locations.add(new Pair<>("Nescafe Cafeteria", 400));
         locations.add(new Pair<>("Food Court (Gate 2)", 400));
 
@@ -92,27 +92,35 @@ public class MainActivity extends AppCompatActivity {
         coordinatesMap.put("Auditorium", "31.70696584790547, 76.52749762818713");
         coordinatesMap.put("Central Library", "31.707149508347, 76.52685828667752");
         coordinatesMap.put("Central Block", "31.707549772997243, 76.52801368892406");
-        coordinatesMap.put("Health Center", "31.70617193420401, 76.52771865049216");
+        coordinatesMap.put("Health Center", "31.706186475059756, 76.52781465493845");
         coordinatesMap.put("Electrical Eng. Dept.", "31.708085400003576, 76.5271815531355");
-        coordinatesMap.put("Electronics and Communication Eng. Dept.", "31.70813262048218, 76.5265409887605");
+        coordinatesMap.put("Electronics and Communication Eng. Dept.", "31.70813333570435, 76.52656497473657");
         coordinatesMap.put("Computer Science and Eng. Dept.", "31.70851407397333, 76.52701776228302");
         coordinatesMap.put("Mechanical Eng. Dept.", "31.708903034644, 76.52670840431122");
         coordinatesMap.put("Civil Eng. Dept.", "31.709144878905, 76.52730340702821");
-        coordinatesMap.put("Physics Dept.", "31.70797416477527, 76.52661849164565");
+        coordinatesMap.put("Physics Dept.", "31.707968227576515, 76.52665329122661");
         coordinatesMap.put("Chemical Eng. Dept", "31.708325106584287, 76.52611847303176");
-        coordinatesMap.put("Material Science Dept.", "31.707619790108954, 76.52792399973634");
-        coordinatesMap.put("Mathematics and Scientific Computing", "31.708443539991, 76.5276638254619");
+        coordinatesMap.put("Material Science Dept.", "31.708005307747786, 76.52656544888137");
+        coordinatesMap.put("Mathematics and Scientific Computing", "31.708428387399962, 76.52770993405153");
         coordinatesMap.put("Architecture Department", "31.709099884671755, 76.52625003184772");
-        coordinatesMap.put("Kailash Boys Hostel", "31.71059356898743, 76.52662886032971");
+        coordinatesMap.put("Kailash Boys Hostel", "31.710591505577213, 76.52675214258389");
         coordinatesMap.put("Ambika Girls Hostel", "31.703996709191138, 76.52536551973783");
-        coordinatesMap.put("Students Park", "31.707145160821206, 76.52849531025659");
+        coordinatesMap.put("Students Park", "31.707112051883847, 76.52850730442567");
         coordinatesMap.put("Open air theatre", "31.70531806369203, 76.52518493127135");
         coordinatesMap.put("NITH Ground", "31.706161666422613, 76.52479654402494");
 
-        coordinatesMap.put("4H Food Court", "31.710762114415314, 76.52695801148334");
+        coordinatesMap.put("4H Food Court", "31.710761393826147, 76.52696231292518");
         coordinatesMap.put("Nescafe Cafeteria", "31.7074170529067, 76.52825056015737");
-        coordinatesMap.put("Food Court (Gate 2)", "31.708552442338988, 76.52276798685268");
-        coordinatesMap.put("Verka", "31.706833626062885, 76.529061436059");
+        coordinatesMap.put("Food Court (Gate 2)", "31.70854909523703, 76.52276750882743");
+        coordinatesMap.put("Verka Cafeteria", "31.706833626062885, 76.529061436059");
+        coordinatesMap.put("Himgiri Boys Hostel", "31.70842276912479, 76.52389584343568");
+
+        coordinatesMap.put("Himadri Boys Hostel", "31.708978893917582, 76.5239415378644");
+        coordinatesMap.put("Neelkanth Boys Hostel", "31.710776488957514, 76.52381088420432");
+        coordinatesMap.put("Udaygiri Boys Hostel", "31.70756046113581, 76.52385450835133");
+        coordinatesMap.put("Dhauladhar Boys Hostel", "31.711615744695976, 76.52477451659834");
+        coordinatesMap.put("Parvati Girls Hostel", "31.703643416450344, 76.52622916787968");
+        coordinatesMap.put("Manimahesh Girls Hostel", "31.712199075829492, 76.52572448565554");
 
         LocationsAdapter adapter = new LocationsAdapter(MainActivity.this, locations, new LocationsAdapter.Listener() {
             @Override
@@ -144,22 +152,6 @@ public class MainActivity extends AppCompatActivity {
 //                    Toast.makeText(MainActivity.this, "Current Location: " + latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
                 }
                 if (progressDialog != null) {
-
-
-
-
-//                    snackbar = Snackbar.make(binding.getRoot(), "Location fetched successfully. Click on a destination.", Snackbar.LENGTH_SHORT).setAction("Okay", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//                            if (snackbar != null)
-//                                snackbar.dismiss();
-//                        }
-//                    });
-//                    snackbar.setBackgroundTint(getColor(R.color.white));
-//                    snackbar.setTextColor(getColor(R.color.black));
-//                    snackbar.setActionTextColor(getColor(R.color.blue));
-//                    snackbar.show();
-//                    Toast.makeText(MainActivity.this, "Location fetched successfully. Click on a destination.", Toast.LENGTH_SHORT).show();
                     progressDialog.dismiss();
                     if(destinationCoor != null) {
                         launchMaps(currentLocation,destinationCoor);
@@ -170,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         int spanCount = 3; // 3 columns
-        int spacing = 16;
+        int spacing = 12;
         boolean includeEdge = true;
         binding.rcvLocations.addItemDecoration(new SpacesItemDecoration(spanCount, spacing, includeEdge));
 
