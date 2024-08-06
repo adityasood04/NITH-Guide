@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.util.Pair;
@@ -93,6 +94,8 @@ public class MainActivity extends AppCompatActivity {
         locations.add(new Pair<>("Verka Cafeteria", 400));
         locations.add(new Pair<>("Nescafe Cafeteria", 400));
         locations.add(new Pair<>("Food Court (Gate 2)", 400));
+        locations.add(new Pair<>("Hiteshi Technical Store", 500));
+        locations.add(new Pair<>("Laundry", 600));
 
 
         coordinatesMap.put("NIT Gate 1", "31.7016995, 76.5229893");
@@ -101,7 +104,7 @@ public class MainActivity extends AppCompatActivity {
         coordinatesMap.put("Auditorium", "31.70696584790547, 76.52749762818713");
         coordinatesMap.put("Central Library", "31.707149508347, 76.52685828667752");
         coordinatesMap.put("Central Block", "31.707549772997243, 76.52801368892406");
-        coordinatesMap.put("Health Center", "31.706186475059756, 76.52781465493845");
+        coordinatesMap.put("Health Center", "31.706279715760836, 76.52774485349184");
         coordinatesMap.put("Electrical Eng. Dept.", "31.708085400003576, 76.5271815531355");
         coordinatesMap.put("Electronics and Communication Eng. Dept.", "31.70813333570435, 76.52656497473657");
         coordinatesMap.put("Computer Science and Eng. Dept.", "31.70851407397333, 76.52701776228302");
@@ -131,6 +134,9 @@ public class MainActivity extends AppCompatActivity {
         coordinatesMap.put("Parvati Girls Hostel", "31.703643416450344, 76.52622916787968");
         coordinatesMap.put("Manimahesh Girls Hostel", "31.712199075829492, 76.52572448565554");
 
+        coordinatesMap.put("Hiteshi Technical Store", "31.709661729779462, 76.52777463504941");
+        coordinatesMap.put("Laundry", "31.70964563471178, 76.52762463530568");
+
         LocationsAdapter adapter = new LocationsAdapter(MainActivity.this, locations, new LocationsAdapter.Listener() {
             @Override
             public void onLocationClicked(String locationName, int position) {
@@ -146,6 +152,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+
+
+
         // location callback
         locationCallback = new LocationCallback() {
             @Override
@@ -158,6 +167,7 @@ public class MainActivity extends AppCompatActivity {
                     double latitude = location.getLatitude();
                     double longitude = location.getLongitude();
                     currentLocation = latitude + "," + longitude;
+                    Log.i(TAG, "onLocationResult: " + currentLocation);
 //                    Toast.makeText(MainActivity.this, "Current Location: " + latitude + ", " + longitude, Toast.LENGTH_SHORT).show();
                 }
                 if (progressDialog != null) {
@@ -305,7 +315,6 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(this, "GPS enabled", Toast.LENGTH_SHORT).show();
             } else {
-                // GPS is still not enabled, show a message or take appropriate action
                 Toast.makeText(this, "GPS is not enabled. Please enable GPS to proceed.", Toast.LENGTH_SHORT).show();
             }
         }
